@@ -20,8 +20,53 @@ input[type=text] {
   border-radius: 8%;
   cursor: pointer;
 }
+
+#message {
+  padding: 10px;
+  background: black;
+  color: green;
+  font-size: 18px;
+  font-family: lemon;
+  
+}
+
+.danger {
+  background-color: darkred !important;
+  color: white !important;
+}
+
+
 </style>
+
+</head>
+
+<body onload=""></body>
+
+<input id="get_cookie_name" placeholder="Cookie Name">
+<input type="button" value="Get Cookie By Name" onclick="return_cookie()">
+
+<br /><br /><hr />
+
+<input id="cookie_name_set"placeholder="cookie name">
+<input id="cookie_val_set" placeholder="cookie value">
+<input id="cookie_time_set" placeholder="time" type="number">
+<input type="button" value="add Cookie" onclick="add_cookie()">
+<br /><br />
+<span id='message'></span>
+
+<br /><br /> <hr /> <br /><br />
+<input id="cookie_name" oninput="get_value(this.value)">
+<input type="button" id="delete_button" value="Delete Cookie" onclick="delete_cookie()">
+
+
 <script>
+
+function add_danger(){
+  document.querySelector('#message').classList.add('danger');
+}
+function remove_dange(){
+  document.getElementById('message').classList.remove('danger');
+}
 function setCookie(cname,cvalue,exdays) {
   var d = new Date();
   d.setTime(d.getTime() + (exdays*24*60*60*1000));
@@ -51,8 +96,9 @@ function checkCookie() {
     alert(" " + age);
   } else {
 
-      alert('no cookies found please create your own');
 
+                document.getElementById('message').innerText = "no cookies found please create your own";
+add_danger();
   }
 }
 
@@ -64,11 +110,15 @@ function add_cookie() {
       
         var ai_name=getCookie(cookie_name);
   if (ai_name != "") {
-    alert("You Already Have cookie with this name try delete it copy the name: " + ai_name);
+    
+          document.getElementById('message').innerText = "You Already Have cookie with this name try delete it copy the name: " + ai_name;
   } else {
      
      if (cookie_name != "" && cookie_name != null) {
       setCookie(cookie_name, cookie_value, cookie_time);
+      document.getElementById('message').innerText = 'Successfully Added '
+      + cookie_name + ' !';
+      remove_dange();
      }
 }
 }
@@ -77,6 +127,9 @@ function add_cookie() {
 function delete_cookie() {
       const cookie_name = document.getElementById('cookie_name').value
       setCookie(cookie_name, 'dummy', 0);
+      document.getElementById('message').innerText = 'Successfully Deleted '
+      + cookie_name + ' !';
+      remove_dange();
 }
 
 
@@ -90,29 +143,17 @@ function return_cookie(){
   const cookie_name = document.getElementById('get_cookie_name').value;
   var cookie_to_get = getCookie(cookie_name);
     if (cookie_to_get != "") {
-        alert(cookie_to_get);
+              document.getElementById('message').innerText = 'Successfully Got Your Cookie it has value '
+      + cookie_to_get + ' .';
+      remove_dange();
     } else {
-        alert('you dont have a cookie with value: ' + cookie_name + '\n \
-        you can create new cookie easy with this cookies dashboard plugin wp');
+
+        
+              document.getElementById('message').innerText = "you dont have a cookie with value: " + cookie_name + "you can create new cookie easy with this cookies dashboard plugin wp";
+              add_danger();
     }
 }
+
+
 </script>
-</head>
-
-<body onload="checkCookie()"></body>
-
-<input id="get_cookie_name" placeholder="Cookie Name">
-<input type="button" value="Get Cookie By Name" onclick="return_cookie()">
-
-<br /><br /><hr />
-
-<input id="cookie_name_set"placeholder="cookie name">
-<input id="cookie_val_set" placeholder="cookie value">
-<input id="cookie_time_set" placeholder="time" type="number">
-<input type="button" value="add Cookie" onclick="add_cookie()">
-
-<br /><br /> <hr /> <br /><br />
-<input id="cookie_name" oninput="get_value(this.value)">
-<input type="button" id="delete_button" value="Delete Cookie" onclick="delete_cookie()">
-
 </html>
