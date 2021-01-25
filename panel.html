@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+function setCookie(cname,cvalue,exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  var expires = "expires=" + d.toGMTString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+function checkCookie() {
+  var age=getCookie("age");
+  if (age != "") {
+    alert(" " + age);
+  } else {
+     age = prompt("Please enter your age:","");
+     if (age != "" && age != null) {
+      setCookie('age', age, 30);
+     }
+  }
+}
+
+
+function delete_cookie() {
+      const cookie_name = document.getElementById('cookie_name').value
+      setCookie(cookie_name, 'dummy', 0);
+}
+
+
+function get_value(cookie_name){
+      const del_btn = document.getElementById('delete_button');
+      del_btn.value="Delete " + cookie_name;
+}
+
+</script>
+</head>
+
+<body onload="checkCookie()"></body>
+
+<input id="cookie_name" oninput="get_value(this.value)">
+<input type="button" id="delete_button" value="Delete Cookie" onclick="delete_cookie()">
+
+</html>
